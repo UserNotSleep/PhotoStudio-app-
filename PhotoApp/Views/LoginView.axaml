@@ -1,0 +1,97 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PhotoApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PhotoApp.Views.LoginView"
+             x:DataType="vm:LoginViewModel">
+  <Grid>
+    <Rectangle Fill="#F8F9FA" />
+    
+    <!-- Background Pattern -->
+    <Canvas>
+      <Ellipse Canvas.Left="-100" Canvas.Top="-100" Width="300" Height="300" Fill="#4361EE" Opacity="0.05"/>
+      <Ellipse Canvas.Right="-150" Canvas.Bottom="-150" Width="400" Height="400" Fill="#4361EE" Opacity="0.08"/>
+      <Ellipse Canvas.Left="480" Canvas.Top="90" Width="200" Height="200" Fill="#E63946" Opacity="0.05"/>
+    </Canvas>
+    
+    <Grid ColumnDefinitions="1.2*,1*">
+      <!-- Left Side - Promo Panel -->
+      <Border Grid.Column="0" Background="#4361EE" CornerRadius="0,16,16,0" Margin="0,40,0,40" ClipToBounds="True">
+        <Grid>
+          <Canvas>
+            <Ellipse Canvas.Left="-50" Canvas.Top="120" Width="200" Height="200" Fill="White" Opacity="0.1"/>
+            <Ellipse Canvas.Right="-100" Canvas.Bottom="-100" Width="300" Height="300" Fill="White" Opacity="0.1"/>
+          </Canvas>
+          
+          <StackPanel Margin="60,0" VerticalAlignment="Center">
+            <TextBlock Text="Photographer's Portal" Foreground="White" FontSize="32" FontWeight="Bold" Margin="0,0,0,16"/>
+            <TextBlock TextWrapping="Wrap" Foreground="White" Opacity="0.9" FontSize="16" Margin="0,0,0,32" 
+                       Text="Управляйте своими фотографиями, клиентами и доходами с нашей простой и удобной системой для фотографов."/>
+            
+            <StackPanel Margin="0,20,0,0">
+              <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                <Border Background="White" CornerRadius="50" Width="32" Height="32" Margin="0,0,16,0">
+                  <TextBlock Text="📸" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="Управление портфолио и галереями" Foreground="White" VerticalAlignment="Center"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                <Border Background="White" CornerRadius="50" Width="32" Height="32" Margin="0,0,16,0">
+                  <TextBlock Text="👥" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="Управление клиентскими заказами" Foreground="White" VerticalAlignment="Center"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                <Border Background="White" CornerRadius="50" Width="32" Height="32" Margin="0,0,16,0">
+                  <TextBlock Text="📊" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="Аналитика и отчеты о доходах" Foreground="White" VerticalAlignment="Center"/>
+              </StackPanel>
+            </StackPanel>
+          </StackPanel>
+        </Grid>
+      </Border>
+      
+      <!-- Right Side - Login Form -->
+      <Border Grid.Column="1" CornerRadius="16" Background="White" Margin="0,40,40,40" BoxShadow="0 4 20 0 #20000000">
+        <StackPanel Margin="40" VerticalAlignment="Center" Spacing="16">
+          <TextBlock Text="Вход в аккаунт" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,24"/>
+          
+          <StackPanel>
+            <TextBlock Text="Имя пользователя" Margin="0,0,0,8" FontSize="14"/>
+            <TextBox Text="{Binding Username}" Watermark="Введите имя пользователя" Height="42"/>
+          </StackPanel>
+          
+          <StackPanel>
+            <TextBlock Text="Пароль" Margin="0,0,0,8" FontSize="14"/>
+            <TextBox PasswordChar="•" Text="{Binding Password}" Watermark="Введите пароль" Height="42"/>
+          </StackPanel>
+          
+          <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,24">
+            <CheckBox Grid.Column="0" Content="Запомнить меня" IsChecked="{Binding RememberMe}"/>
+            <TextBlock Grid.Column="1" Text="Забыли пароль?" Foreground="#4361EE" VerticalAlignment="Center" Cursor="Hand"/>
+          </Grid>
+          
+          <Button Content="Войти" Command="{Binding LoginCommand}" Classes="primary"
+                  HorizontalAlignment="Stretch" Height="45" FontSize="16" FontWeight="SemiBold"
+                  HorizontalContentAlignment="Center"/>
+                
+          <TextBlock Text="{Binding ErrorMessage}" 
+                     Foreground="#E63946" 
+                     HorizontalAlignment="Center" 
+                     Margin="0,16,0,0"/>
+                     
+          <TextBlock Text="Еще нет аккаунта? Зарегистрироваться" HorizontalAlignment="Center" Margin="0,24,0,0">
+            <TextBlock.Styles>
+              <Style Selector="TextBlock">
+                <Setter Property="Cursor" Value="Hand"/>
+              </Style>
+            </TextBlock.Styles>
+          </TextBlock>
+        </StackPanel>
+      </Border>
+    </Grid>
+  </Grid>
+</UserControl> 

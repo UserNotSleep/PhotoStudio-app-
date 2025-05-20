@@ -1,0 +1,229 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PhotoApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
+             x:Class="PhotoApp.Views.PhotographerDashboardView"
+             x:DataType="vm:PhotographerDashboardViewModel">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="250" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="60" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <!-- Top App Bar -->
+    <Border Grid.ColumnSpan="2" 
+            Background="#333333" 
+            BoxShadow="0 2 10 0 #20000000">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <StackPanel Grid.Column="0" 
+                    Orientation="Horizontal" 
+                    VerticalAlignment="Center" 
+                    Margin="20,0,0,0">
+          <TextBlock Text="📷" 
+                    FontSize="24" 
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Center"/>
+          <TextBlock Text="Photographer's Portal" 
+                     Foreground="White" 
+                     FontSize="18" 
+                     FontWeight="SemiBold" 
+                     VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center" 
+                    Margin="0,0,20,0">
+          <TextBlock Text="{Binding Username}" 
+                     Foreground="White" 
+                     VerticalAlignment="Center" 
+                     Margin="0,0,15,0"/>
+          <Button Content="Logout" 
+                  Command="{Binding LogoutCommand}" 
+                  Background="#f44336" 
+                  Foreground="White" 
+                  Padding="10,5"/>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- Side Navigation Menu -->
+    <Border Grid.Row="1" 
+            Grid.Column="0" 
+            Background="#f0f0f0" 
+            BorderThickness="0,0,1,0" 
+            BorderBrush="#dddddd">
+      <StackPanel Margin="0,20,0,0">
+        <Button Content="Dashboard" 
+                Classes="NavButton" 
+                Command="{Binding NavigateCommand}" 
+                CommandParameter="Dashboard"/>
+        <Button Content="My Photos" 
+                Classes="NavButton" 
+                Command="{Binding NavigateCommand}" 
+                CommandParameter="Photos"/>
+        <Button Content="Upload" 
+                Classes="NavButton" 
+                Command="{Binding NavigateCommand}" 
+                CommandParameter="Upload"/>
+        <Button Content="Albums" 
+                Classes="NavButton" 
+                Command="{Binding NavigateCommand}" 
+                CommandParameter="Albums"/>
+        <Button Content="Settings" 
+                Classes="NavButton" 
+                Command="{Binding NavigateCommand}" 
+                CommandParameter="Settings"/>
+      </StackPanel>
+    </Border>
+
+    <!-- Main Content Area -->
+    <Border Grid.Row="1" 
+            Grid.Column="1" 
+            Padding="20" 
+            Background="White">
+      <Grid RowDefinitions="Auto,*">
+        <TextBlock Text="{Binding CurrentView}" 
+                   FontSize="24" 
+                   FontWeight="Bold" 
+                   Margin="0,0,0,20"/>
+
+        <!-- Dashboard Content -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*,*" RowDefinitions="Auto,*" Margin="0,10,0,0">
+          <!-- Stats Panels -->
+          <Border Grid.Column="0" 
+                  Margin="0,0,10,0" 
+                  Background="#e3f2fd" 
+                  CornerRadius="5" 
+                  Padding="15" 
+                  Height="120">
+            <StackPanel>
+              <TextBlock Text="Total Photos" 
+                         FontSize="16" 
+                         Foreground="#333333"/>
+              <TextBlock Text="248" 
+                         FontSize="32" 
+                         FontWeight="Bold" 
+                         Foreground="#1976d2" 
+                         Margin="0,10,0,0"/>
+              <TextBlock Text="+12% from last month" 
+                         FontSize="12" 
+                         Foreground="#388e3c" 
+                         Margin="0,5,0,0"/>
+            </StackPanel>
+          </Border>
+
+          <Border Grid.Column="1" 
+                  Margin="5,0,5,0" 
+                  Background="#fff8e1" 
+                  CornerRadius="5" 
+                  Padding="15" 
+                  Height="120">
+            <StackPanel>
+              <TextBlock Text="Albums" 
+                         FontSize="16" 
+                         Foreground="#333333"/>
+              <TextBlock Text="15" 
+                         FontSize="32" 
+                         FontWeight="Bold" 
+                         Foreground="#ff8f00" 
+                         Margin="0,10,0,0"/>
+              <TextBlock Text="2 new albums this month" 
+                         FontSize="12" 
+                         Foreground="#388e3c" 
+                         Margin="0,5,0,0"/>
+            </StackPanel>
+          </Border>
+
+          <Border Grid.Column="2" 
+                  Margin="10,0,0,0" 
+                  Background="#e8f5e9" 
+                  CornerRadius="5" 
+                  Padding="15" 
+                  Height="120">
+            <StackPanel>
+              <TextBlock Text="Storage Used" 
+                         FontSize="16" 
+                         Foreground="#333333"/>
+              <TextBlock Text="2.4 GB" 
+                         FontSize="32" 
+                         FontWeight="Bold" 
+                         Foreground="#2e7d32" 
+                         Margin="0,10,0,0"/>
+              <TextBlock Text="7.6 GB available" 
+                         FontSize="12" 
+                         Foreground="#1976d2" 
+                         Margin="0,5,0,0"/>
+            </StackPanel>
+          </Border>
+
+          <!-- Recent Activities Section -->
+          <Border Grid.Row="1" 
+                  Grid.ColumnSpan="3" 
+                  Margin="0,20,0,0" 
+                  Background="#fafafa" 
+                  BorderBrush="#eeeeee" 
+                  BorderThickness="1" 
+                  CornerRadius="5" 
+                  Padding="20">
+            <StackPanel>
+              <TextBlock Text="Recent Activity" 
+                         FontSize="18" 
+                         FontWeight="SemiBold" 
+                         Margin="0,0,0,15"/>
+                         
+              <ListBox Background="Transparent" 
+                       BorderThickness="0">
+                <ListBoxItem>
+                  <TextBlock Text="You uploaded 12 new photos to 'Summer Vacation' album" 
+                             Margin="0,5"/>
+                </ListBoxItem>
+                <ListBoxItem>
+                  <TextBlock Text="Album 'Client Project ABC' created" 
+                             Margin="0,5"/>
+                </ListBoxItem>
+                <ListBoxItem>
+                  <TextBlock Text="You edited metadata for 5 photos" 
+                             Margin="0,5"/>
+                </ListBoxItem>
+                <ListBoxItem>
+                  <TextBlock Text="Storage quota increased to 10GB" 
+                             Margin="0,5"/>
+                </ListBoxItem>
+                <ListBoxItem>
+                  <TextBlock Text="You shared 'Wedding Photos' album with 3 people" 
+                             Margin="0,5"/>
+                </ListBoxItem>
+              </ListBox>
+            </StackPanel>
+          </Border>
+        </Grid>
+      </Grid>
+    </Border>
+  </Grid>
+  
+  <UserControl.Styles>
+    <Style Selector="Button.NavButton">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Foreground" Value="#333333"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="HorizontalContentAlignment" Value="Left"/>
+      <Setter Property="Padding" Value="20,10"/>
+      <Setter Property="Margin" Value="0,5"/>
+      <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style Selector="Button.NavButton:pointerover">
+      <Setter Property="Background" Value="#dddddd"/>
+    </Style>
+    <Style Selector="Button.NavButton:pressed">
+      <Setter Property="Background" Value="#cccccc"/>
+    </Style>
+  </UserControl.Styles>
+</UserControl> 
