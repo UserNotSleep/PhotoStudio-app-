@@ -22,9 +22,9 @@ class Client(db.Model):
 class Session(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False)
-    duration = db.Column(db.Integer, nullable=False)  # Duration in minutes
+    duration = db.Column(db.Integer, nullable=False)  
     price = db.Column(db.Float, nullable=False)
-    status = db.Column(db.String(20), nullable=False)  # 'scheduled', 'completed', 'cancelled'
+    status = db.Column(db.String(20), nullable=False)  
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'), nullable=False)
     photos = db.relationship('Photo', backref='session', lazy=True)
 
@@ -35,7 +35,7 @@ class Photo(db.Model):
     session_id = db.Column(db.Integer, db.ForeignKey('session.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-# Routes
+
 @app.route('/api/clients', methods=['GET'])
 def get_clients():
     clients = Client.query.all()

@@ -1,14 +1,17 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Reactive;
 using Avalonia.Controls;
 using PhotoStudio.Desktop.Models;
 using ReactiveUI;
+using Avalonia.Controls.Notifications;
 
 namespace PhotoStudio.Desktop.ViewModels;
 
-public class MainWindowViewModel : ViewModelBase
+public class MainWindowViewModel : ReactiveObject
 {
     private readonly HttpClient _httpClient;
     private ObservableCollection<Client> _clients;
@@ -72,7 +75,7 @@ public class MainWindowViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await ShowErrorAsync("Error loading data", ex.Message);
+            ShowError("Error loading data", ex.Message);
         }
     }
 
@@ -95,7 +98,7 @@ public class MainWindowViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await ShowErrorAsync("Error adding client", ex.Message);
+            ShowError("Error adding client", ex.Message);
         }
     }
 
@@ -120,7 +123,7 @@ public class MainWindowViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await ShowErrorAsync("Error adding session", ex.Message);
+            ShowError("Error adding session", ex.Message);
         }
     }
 
@@ -143,19 +146,13 @@ public class MainWindowViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await ShowErrorAsync("Error adding photo", ex.Message);
+            ShowError("Error adding photo", ex.Message);
         }
     }
 
-    private async Task ShowErrorAsync(string title, string message)
+    private void ShowError(string title, string message)
     {
-        var dialog = new MessageBoxManager.MessageBoxParams
-        {
-            Title = title,
-            Message = message,
-            Buttons = MessageBoxManager.MessageBoxButtons.Ok
-        };
-
-        await MessageBoxManager.GetMessageBoxStandard(dialog).ShowAsync();
+        // Просто выводим сообщение об ошибке в консоль, так как у нас нет доступа к UI напрямую
+        Console.WriteLine($"ERROR: {title} - {message}");
     }
 } 

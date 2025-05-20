@@ -3,10 +3,10 @@
         xmlns:vm="using:PhotoStudio.Desktop.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="using:Avalonia.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="PhotoStudio.Desktop.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
         Title="Photo Studio Management System">
 
     <TabControl Grid.Row="1" SelectedIndex="{Binding SelectedTabIndex}">
@@ -14,14 +14,14 @@
         <TabItem Header="Clients">
             <Grid RowDefinitions="Auto,*">
                 <Button Grid.Row="0" Content="Add Client" Command="{Binding AddClientCommand}" Margin="5"/>
-                <DataGrid Grid.Row="1" Items="{Binding Clients}" AutoGenerateColumns="False" IsReadOnly="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="Phone" Binding="{Binding Phone}"/>
-                        <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <controls:DataGrid Grid.Row="1" Items="{Binding Clients}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <controls:DataGrid.Columns>
+                        <controls:DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                        <controls:DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                        <controls:DataGridTextColumn Header="Phone" Binding="{Binding Phone}"/>
+                        <controls:DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                    </controls:DataGrid.Columns>
+                </controls:DataGrid>
             </Grid>
         </TabItem>
 
@@ -29,16 +29,16 @@
         <TabItem Header="Sessions">
             <Grid RowDefinitions="Auto,*">
                 <Button Grid.Row="0" Content="Add Session" Command="{Binding AddSessionCommand}" Margin="5"/>
-                <DataGrid Grid.Row="1" Items="{Binding Sessions}" AutoGenerateColumns="False" IsReadOnly="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                        <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
-                        <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
-                        <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
-                        <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
-                        <DataGridTextColumn Header="Client ID" Binding="{Binding ClientId}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <controls:DataGrid Grid.Row="1" Items="{Binding Sessions}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <controls:DataGrid.Columns>
+                        <controls:DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                        <controls:DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                        <controls:DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
+                        <controls:DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
+                        <controls:DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
+                        <controls:DataGridTextColumn Header="Client ID" Binding="{Binding ClientId}"/>
+                    </controls:DataGrid.Columns>
+                </controls:DataGrid>
             </Grid>
         </TabItem>
 
@@ -46,15 +46,15 @@
         <TabItem Header="Photos">
             <Grid RowDefinitions="Auto,*">
                 <Button Grid.Row="0" Content="Add Photo" Command="{Binding AddPhotoCommand}" Margin="5"/>
-                <DataGrid Grid.Row="1" Items="{Binding Photos}" AutoGenerateColumns="False" IsReadOnly="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                        <DataGridTextColumn Header="Filename" Binding="{Binding Filename}"/>
-                        <DataGridTextColumn Header="Path" Binding="{Binding Path}"/>
-                        <DataGridTextColumn Header="Session ID" Binding="{Binding SessionId}"/>
-                        <DataGridTextColumn Header="Created At" Binding="{Binding CreatedAt}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <controls:DataGrid Grid.Row="1" Items="{Binding Photos}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <controls:DataGrid.Columns>
+                        <controls:DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                        <controls:DataGridTextColumn Header="Filename" Binding="{Binding Filename}"/>
+                        <controls:DataGridTextColumn Header="Path" Binding="{Binding Path}"/>
+                        <controls:DataGridTextColumn Header="Session ID" Binding="{Binding SessionId}"/>
+                        <controls:DataGridTextColumn Header="Created At" Binding="{Binding CreatedAt}"/>
+                    </controls:DataGrid.Columns>
+                </controls:DataGrid>
             </Grid>
         </TabItem>
     </TabControl>
