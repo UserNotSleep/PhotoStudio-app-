@@ -11,17 +11,37 @@
         Background="White"
         WindowStartupLocation="CenterScreen"
         Width="1100" Height="750"
-        MinWidth="900" MinHeight="600">
+        MinWidth="900" MinHeight="600"
+        Icon="/Assets/avalonia-logo.ico">
 
     <Grid RowDefinitions="Auto,*">
         <!-- Заголовок -->
-        <Border Grid.Row="0" Background="#3498db" Padding="20,15">
-            <StackPanel>
-                <TextBlock Text="Система управления фотостудией" 
-                           FontSize="24" FontWeight="Bold" Foreground="White"/>
-                <TextBlock Text="Управление клиентами, фотосессиями и фотографиями" 
-                           FontSize="14" Foreground="White" Opacity="0.8" Margin="0,5,0,0"/>
-            </StackPanel>
+        <Border Grid.Row="0" Background="#3498db" Padding="20,15" BoxShadow="0 2 10 0 #40000000">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="15" VerticalAlignment="Center">
+                    <TextBlock Text="📸" FontSize="28"/>
+                    <StackPanel>
+                        <TextBlock Text="Система управления фотостудией" 
+                                FontSize="24" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="Управление клиентами, фотосессиями и фотографиями" 
+                                FontSize="14" Foreground="White" Opacity="0.8" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+                
+                <!-- Правая часть заголовка -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="15" VerticalAlignment="Center">
+                    <Border Background="#ffffff30" CornerRadius="4" Padding="10,8">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="👤" FontSize="16" VerticalAlignment="Center"/>
+                            <StackPanel>
+                                <TextBlock Text="Администратор" Foreground="White" FontWeight="SemiBold"/>
+                                <TextBlock Text="admin@photostudio.ru" Foreground="White" Opacity="0.8" FontSize="12"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <Button Content="⚙️ Настройки" Background="#ffffff30"/>
+                </StackPanel>
+            </Grid>
         </Border>
 
         <!-- Основной контент -->
@@ -31,16 +51,20 @@
                 <TabItem Header="Клиенты">
                     <Grid RowDefinitions="Auto,*">
                         <!-- Панель действий -->
-                        <Border Grid.Row="0" Background="#f8f9fa" Padding="15" CornerRadius="4" Margin="10,10,10,15"
-                                BorderBrush="#e9ecef" BorderThickness="1">
+                        <Border Grid.Row="0" Background="#f8f9fa" Padding="15" CornerRadius="6" Margin="10,10,10,15"
+                                BorderBrush="#e9ecef" BorderThickness="1" BoxShadow="0 2 5 0 #20000000">
                             <Grid ColumnDefinitions="*,Auto">
                                 <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10">
-                                    <Button Content="Добавить клиента" Command="{Binding AddClientCommand}"/>
-                                    <Button Content="Обновить список" Command="{Binding LoadDataCommand}"
+                                    <Button Content="➕ Добавить клиента" Command="{Binding AddClientCommand}"/>
+                                    <Button Content="🔄 Обновить" Command="{Binding LoadDataCommand}"
                                             Background="#28a745"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
-                                    <TextBox Width="250" Watermark="Поиск клиентов..." Padding="10,7"/>
+                                    <TextBox Width="250" Watermark="Поиск клиентов..." Padding="10,7">
+                                        <TextBox.InnerLeftContent>
+                                            <TextBlock Text="🔍" Margin="8,0,0,0" VerticalAlignment="Center" FontSize="14"/>
+                                        </TextBox.InnerLeftContent>
+                                    </TextBox>
                                     <Button Content="Поиск" Background="#6c757d"/>
                                 </StackPanel>
                             </Grid>
@@ -48,7 +72,7 @@
 
                         <!-- Таблица клиентов -->
                         <Border Grid.Row="1" Margin="10,0,10,10" BorderBrush="#e9ecef" BorderThickness="1" 
-                                CornerRadius="4" Padding="0" ClipToBounds="True">
+                                CornerRadius="6" Padding="0" ClipToBounds="True" BoxShadow="0 2 8 0 #20000000">
                             <DataGrid ItemsSource="{Binding Clients}" AutoGenerateColumns="False" IsReadOnly="True">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="70"/>
@@ -60,11 +84,11 @@
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
                                                     <Button Content="✎" ToolTip.Tip="Редактировать" Background="#ffc107" 
-                                                            Foreground="#212529" Padding="8,5"/>
-                                                    <Button Content="✓" ToolTip.Tip="Просмотр сессий" Background="#17a2b8" 
-                                                            Padding="8,5"/>
+                                                            Foreground="#212529" Padding="8,5" CornerRadius="4"/>
+                                                    <Button Content="👁" ToolTip.Tip="Просмотр сессий" Background="#17a2b8" 
+                                                            Padding="8,5" CornerRadius="4"/>
                                                     <Button Content="✗" ToolTip.Tip="Удалить" Background="#dc3545" 
-                                                            Padding="8,5"/>
+                                                            Padding="8,5" CornerRadius="4"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
@@ -79,12 +103,12 @@
                 <TabItem Header="Фотосессии">
                     <Grid RowDefinitions="Auto,*">
                         <!-- Панель действий -->
-                        <Border Grid.Row="0" Background="#f8f9fa" Padding="15" CornerRadius="4" Margin="10,10,10,15"
-                                BorderBrush="#e9ecef" BorderThickness="1">
+                        <Border Grid.Row="0" Background="#f8f9fa" Padding="15" CornerRadius="6" Margin="10,10,10,15"
+                                BorderBrush="#e9ecef" BorderThickness="1" BoxShadow="0 2 5 0 #20000000">
                             <Grid ColumnDefinitions="*,Auto">
                                 <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10">
-                                    <Button Content="Добавить фотосессию" Command="{Binding AddSessionCommand}"/>
-                                    <Button Content="Обновить список" Command="{Binding LoadDataCommand}"
+                                    <Button Content="➕ Добавить сессию" Command="{Binding AddSessionCommand}"/>
+                                    <Button Content="🔄 Обновить" Command="{Binding LoadDataCommand}"
                                             Background="#28a745"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
@@ -94,7 +118,11 @@
                                         <ComboBoxItem>Завершенные</ComboBoxItem>
                                         <ComboBoxItem>Отмененные</ComboBoxItem>
                                     </ComboBox>
-                                    <TextBox Width="200" Watermark="Поиск..." Padding="10,7"/>
+                                    <TextBox Width="200" Watermark="Поиск..." Padding="10,7">
+                                        <TextBox.InnerLeftContent>
+                                            <TextBlock Text="🔍" Margin="8,0,0,0" VerticalAlignment="Center" FontSize="14"/>
+                                        </TextBox.InnerLeftContent>
+                                    </TextBox>
                                     <Button Content="Поиск" Background="#6c757d"/>
                                 </StackPanel>
                             </Grid>
@@ -102,7 +130,7 @@
 
                         <!-- Таблица фотосессий -->
                         <Border Grid.Row="1" Margin="10,0,10,10" BorderBrush="#e9ecef" BorderThickness="1" 
-                                CornerRadius="4" Padding="0" ClipToBounds="True">
+                                CornerRadius="6" Padding="0" ClipToBounds="True" BoxShadow="0 2 8 0 #20000000">
                             <DataGrid ItemsSource="{Binding Sessions}" AutoGenerateColumns="False" IsReadOnly="True">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="70"/>
@@ -112,7 +140,7 @@
                                     <DataGridTemplateColumn Header="Статус" Width="140">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Border CornerRadius="3" Padding="5,3" Margin="5,2"
+                                                <Border CornerRadius="4" Padding="5,3" Margin="5,2"
                                                         Background="{Binding Status, Converter={StaticResource StatusColorConverter}}">
                                                     <TextBlock Text="{Binding Status}" Foreground="White" 
                                                                HorizontalAlignment="Center" FontWeight="SemiBold"/>
@@ -126,11 +154,11 @@
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
                                                     <Button Content="✎" ToolTip.Tip="Редактировать" Background="#ffc107" 
-                                                            Foreground="#212529" Padding="8,5"/>
+                                                            Foreground="#212529" Padding="8,5" CornerRadius="4"/>
                                                     <Button Content="🖼" ToolTip.Tip="Фотографии" Background="#17a2b8" 
-                                                            Padding="8,5"/>
+                                                            Padding="8,5" CornerRadius="4"/>
                                                     <Button Content="✗" ToolTip.Tip="Удалить" Background="#dc3545" 
-                                                            Padding="8,5"/>
+                                                            Padding="8,5" CornerRadius="4"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
@@ -145,16 +173,20 @@
                 <TabItem Header="Фотографии">
                     <Grid RowDefinitions="Auto,*">
                         <!-- Панель действий -->
-                        <Border Grid.Row="0" Background="#f8f9fa" Padding="15" CornerRadius="4" Margin="10,10,10,15"
-                                BorderBrush="#e9ecef" BorderThickness="1">
+                        <Border Grid.Row="0" Background="#f8f9fa" Padding="15" CornerRadius="6" Margin="10,10,10,15"
+                                BorderBrush="#e9ecef" BorderThickness="1" BoxShadow="0 2 5 0 #20000000">
                             <Grid ColumnDefinitions="*,Auto">
                                 <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10">
-                                    <Button Content="Добавить фотографию" Command="{Binding AddPhotoCommand}"/>
-                                    <Button Content="Обновить список" Command="{Binding LoadDataCommand}"
+                                    <Button Content="➕ Добавить фото" Command="{Binding AddPhotoCommand}"/>
+                                    <Button Content="🔄 Обновить" Command="{Binding LoadDataCommand}"
                                             Background="#28a745"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
-                                    <TextBox Width="200" Watermark="Поиск по имени файла..." Padding="10,7"/>
+                                    <TextBox Width="200" Watermark="Поиск по имени файла..." Padding="10,7">
+                                        <TextBox.InnerLeftContent>
+                                            <TextBlock Text="🔍" Margin="8,0,0,0" VerticalAlignment="Center" FontSize="14"/>
+                                        </TextBox.InnerLeftContent>
+                                    </TextBox>
                                     <ComboBox Width="150" SelectedIndex="0" PlaceholderText="Сессия">
                                         <ComboBoxItem>Все сессии</ComboBoxItem>
                                     </ComboBox>
@@ -165,7 +197,7 @@
 
                         <!-- Таблица фотографий -->
                         <Border Grid.Row="1" Margin="10,0,10,10" BorderBrush="#e9ecef" BorderThickness="1" 
-                                CornerRadius="4" Padding="0" ClipToBounds="True">
+                                CornerRadius="6" Padding="0" ClipToBounds="True" BoxShadow="0 2 8 0 #20000000">
                             <DataGrid ItemsSource="{Binding Photos}" AutoGenerateColumns="False" IsReadOnly="True">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="70"/>
@@ -178,9 +210,9 @@
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
                                                     <Button Content="👁" ToolTip.Tip="Просмотр" Background="#17a2b8" 
-                                                            Padding="8,5"/>
+                                                            Padding="8,5" CornerRadius="4"/>
                                                     <Button Content="✗" ToolTip.Tip="Удалить" Background="#dc3545" 
-                                                            Padding="8,5"/>
+                                                            Padding="8,5" CornerRadius="4"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
@@ -197,15 +229,14 @@
                         <Border Grid.Row="0" Background="#f8f9fa" Padding="15" CornerRadius="4" Margin="10,10,10,15"
                                 BorderBrush="#e9ecef" BorderThickness="1">
                             <StackPanel>
-                                <TextBlock Text="Статистика фотостудии" FontSize="18" FontWeight="Bold"/>
-                                <TextBlock Text="Основные показатели работы" Opacity="0.7" Margin="0,5,0,0"/>
+                                <TextBlock Text="Статистика фотостудии" Classes="heading"/>
+                                <TextBlock Text="Основные показатели работы" Classes="subheading"/>
                             </StackPanel>
                         </Border>
                         
                         <Grid Grid.Row="1" ColumnDefinitions="*,*,*" RowDefinitions="*,*" Margin="5">
                             <!-- Информационные карточки -->
-                            <Border Grid.Column="0" Grid.Row="0" Background="White" BorderBrush="#e9ecef" 
-                                    BorderThickness="1" CornerRadius="4" Margin="5" Padding="15">
+                            <Border Grid.Column="0" Grid.Row="0" Classes="card">
                                 <StackPanel>
                                     <TextBlock Text="Всего клиентов" FontSize="16" Opacity="0.7"/>
                                     <TextBlock Text="25" FontSize="36" FontWeight="Bold" Foreground="#3498db"/>
@@ -213,8 +244,7 @@
                                 </StackPanel>
                             </Border>
                             
-                            <Border Grid.Column="1" Grid.Row="0" Background="White" BorderBrush="#e9ecef" 
-                                    BorderThickness="1" CornerRadius="4" Margin="5" Padding="15">
+                            <Border Grid.Column="1" Grid.Row="0" Classes="card">
                                 <StackPanel>
                                     <TextBlock Text="Завершенных сессий" FontSize="16" Opacity="0.7"/>
                                     <TextBlock Text="42" FontSize="36" FontWeight="Bold" Foreground="#3498db"/>
@@ -222,8 +252,7 @@
                                 </StackPanel>
                             </Border>
                             
-                            <Border Grid.Column="2" Grid.Row="0" Background="White" BorderBrush="#e9ecef" 
-                                    BorderThickness="1" CornerRadius="4" Margin="5" Padding="15">
+                            <Border Grid.Column="2" Grid.Row="0" Classes="card">
                                 <StackPanel>
                                     <TextBlock Text="Общий доход" FontSize="16" Opacity="0.7"/>
                                     <TextBlock Text="₽ 126,000" FontSize="36" FontWeight="Bold" Foreground="#3498db"/>
@@ -231,10 +260,9 @@
                                 </StackPanel>
                             </Border>
                             
-                            <Border Grid.Column="0" Grid.Row="1" Background="White" BorderBrush="#e9ecef" 
-                                    BorderThickness="1" CornerRadius="4" Margin="5" Padding="15" Grid.ColumnSpan="2">
+                            <Border Grid.Column="0" Grid.Row="1" Classes="card" Grid.ColumnSpan="2">
                                 <StackPanel>
-                                    <TextBlock Text="Популярные типы съемок" FontSize="16" FontWeight="SemiBold"/>
+                                    <TextBlock Text="Популярные типы съемок" Classes="heading"/>
                                     <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" Margin="0,15,0,0">
                                         <TextBlock Grid.Row="0" Grid.Column="0" Text="Портретная съемка"/>
                                         <TextBlock Grid.Row="0" Grid.Column="1" Text="45%" FontWeight="SemiBold"/>
@@ -251,10 +279,9 @@
                                 </StackPanel>
                             </Border>
                             
-                            <Border Grid.Column="2" Grid.Row="1" Background="White" BorderBrush="#e9ecef" 
-                                    BorderThickness="1" CornerRadius="4" Margin="5" Padding="15">
+                            <Border Grid.Column="2" Grid.Row="1" Classes="card">
                                 <StackPanel>
-                                    <TextBlock Text="Ближайшие сессии" FontSize="16" FontWeight="SemiBold"/>
+                                    <TextBlock Text="Ближайшие сессии" Classes="heading"/>
                                     <StackPanel Margin="0,15,0,0" Spacing="12">
                                         <Border Background="#e3f2fd" CornerRadius="4" Padding="10">
                                             <StackPanel>

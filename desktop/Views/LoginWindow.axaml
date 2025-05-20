@@ -4,97 +4,138 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="600"
         x:Class="PhotoStudio.Desktop.Views.LoginWindow"
-        Title="Вход в систему фотостудии"
-        Width="500" Height="600"
+        Title="Вход в PhotoSpace"
+        SizeToContent="Height"
+        Width="450"
+        MinHeight="450"
         WindowStartupLocation="CenterScreen"
-        TransparencyLevelHint="AcrylicBlur"
-        Background="Transparent">
+        Background="#F9F9F9"
+        Icon="/Assets/avalonia-logo.ico">
 
-    <Panel>
-        <!-- Фоновое изображение -->
-        <Border>
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                    <GradientStop Color="#3498db" Offset="0"/>
-                    <GradientStop Color="#1f4864" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
-        </Border>
+    <Window.Styles>
+        <!-- Стили для TextBox -->
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Foreground" Value="#333333"/>
+        </Style>
         
-        <!-- Полупрозрачный слой -->
-        <Panel Opacity="0.9">
-            <ExperimentalAcrylicBorder IsHitTestVisible="False">
-                <ExperimentalAcrylicBorder.Material>
-                    <ExperimentalAcrylicMaterial
-                        BackgroundSource="Digger"
-                        TintColor="Black"
-                        TintOpacity="0.1"
-                        MaterialOpacity="0.7" />
-                </ExperimentalAcrylicBorder.Material>
-            </ExperimentalAcrylicBorder>
-        </Panel>
+        <Style Selector="TextBox:focus">
+            <Setter Property="BorderBrush" Value="#3498db"/>
+        </Style>
         
-        <!-- Основной контент -->
-        <Grid RowDefinitions="Auto,*">
+        <!-- Стили для Button -->
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#1A1A1A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="46"/>
+        </Style>
+        
+        <Style Selector="Button.primary:pointerover">
+            <Setter Property="Background" Value="#333333"/>
+        </Style>
+        
+        <Style Selector="Button.tab">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        
+        <Style Selector="Button.tab:pointerover">
+            <Setter Property="Background" Value="#F5F5F5"/>
+        </Style>
+        
+        <Style Selector="Button.link">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        
+        <Style Selector="Button.link:pointerover TextBlock">
+            <Setter Property="Foreground" Value="#3498db"/>
+        </Style>
+        
+        <!-- Стили для выбора типа аккаунта -->
+        <Style Selector="Border.account-type">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        
+        <Style Selector="Border.account-type:pointerover">
+            <Setter Property="BorderBrush" Value="#3498db"/>
+            <Setter Property="Background" Value="#F5F9FF"/>
+        </Style>
+        
+        <Style Selector="Border.account-type.selected">
+            <Setter Property="BorderBrush" Value="#3498db"/>
+            <Setter Property="Background" Value="#EBF5FF"/>
+        </Style>
+        
+        <!-- Стили для TextBlock в account-type -->
+        <Style Selector="Border.account-type TextBlock">
+            <Setter Property="Foreground" Value="#333333"/>
+        </Style>
+        
+        <!-- Стили для CheckBox -->
+        <Style Selector="CheckBox">
+            <Setter Property="Margin" Value="0,0,0,5"/>
+            <Setter Property="Foreground" Value="#333333"/>
+        </Style>
+        
+        <!-- Стили для TextBlock -->
+        <Style Selector="TextBlock.field-label">
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+    </Window.Styles>
+
+    <Border Padding="20" Background="White" Margin="0" CornerRadius="0">
+        <Grid RowDefinitions="Auto,Auto,*">
             <!-- Заголовок -->
-            <StackPanel Grid.Row="0" Margin="0,50,0,0">
-                <TextBlock Text="Фотостудия" HorizontalAlignment="Center" 
-                         FontSize="36" FontWeight="Bold" Foreground="White"
-                         FontFamily="{DynamicResource InterBold}"/>
-                <TextBlock Text="Система управления" HorizontalAlignment="Center" 
-                         FontSize="20" Foreground="White" Opacity="0.8"
-                         FontFamily="{DynamicResource InterRegular}"/>
+            <StackPanel Grid.Row="0" Margin="0,20,0,30">
+                <TextBlock Text="PhotoSpace" HorizontalAlignment="Center" 
+                         FontSize="30" FontWeight="Bold" Foreground="#333333"/>
+                <TextBlock Text="Система управления фотостудиями" HorizontalAlignment="Center" 
+                         FontSize="16" Foreground="#777777" Margin="0,5,0,0"/>
             </StackPanel>
             
-            <!-- Форма входа -->
-            <Border Grid.Row="1" Background="White" Margin="50,30,50,50" 
-                    CornerRadius="8" BoxShadow="0 4 20 0 #40000000">
-                <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" Margin="30">
-                    <TextBlock Grid.Row="0" Text="Вход в систему" 
-                               FontSize="22" FontWeight="Bold" Margin="0,0,0,20"
-                               FontFamily="{DynamicResource InterBold}"/>
-                    
-                    <StackPanel Grid.Row="1" Margin="0,0,0,15">
-                        <TextBlock Text="Имя пользователя" Margin="0,0,0,5"
-                                   FontFamily="{DynamicResource InterRegular}"/>
-                        <TextBox Watermark="Введите имя пользователя" Padding="10"
-                                 FontFamily="{DynamicResource InterRegular}"/>
-                    </StackPanel>
-                    
-                    <StackPanel Grid.Row="2" Margin="0,0,0,25">
-                        <TextBlock Text="Пароль" Margin="0,0,0,5"
-                                   FontFamily="{DynamicResource InterRegular}"/>
-                        <TextBox PasswordChar="•" Watermark="Введите пароль" Padding="10"
-                                 FontFamily="{DynamicResource InterRegular}"/>
-                    </StackPanel>
-                    
-                    <StackPanel Grid.Row="3" Orientation="Horizontal" 
-                                HorizontalAlignment="Stretch" Margin="0,0,0,20">
-                        <CheckBox Content="Запомнить меня" IsChecked="True"
-                                  FontFamily="{DynamicResource InterRegular}"/>
-                        <Button Content="Забыли пароль?" Background="Transparent" 
-                                Foreground="#3498db" Padding="5,0" Margin="30,0,0,0" 
-                                VerticalAlignment="Center">
-                            <Button.Styles>
-                                <Style Selector="Button">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="BorderThickness" Value="0"/>
-                                    <Setter Property="FontFamily" Value="{DynamicResource InterRegular}"/>
-                                </Style>
-                                <Style Selector="Button:pointerover /template/ ContentPresenter">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="TextBlock.Foreground" Value="#2980b9"/>
-                                </Style>
-                            </Button.Styles>
-                        </Button>
-                    </StackPanel>
-                    
-                    <Button Grid.Row="4" Content="Войти" HorizontalAlignment="Stretch" 
-                            VerticalAlignment="Bottom" Padding="0,12" FontSize="16"
-                            Command="{Binding LoginCommand}"
-                            FontFamily="{DynamicResource InterSemiBold}"/>
+            <!-- Вкладки -->
+            <Border Grid.Row="1" BorderBrush="#EEEEEE" BorderThickness="0,0,0,1">
+                <Grid ColumnDefinitions="*,*">
+                    <Button Grid.Column="0" Content="Вход" Classes="tab" Height="50" 
+                            Name="LoginTab"
+                            BorderThickness="0,0,0,2" BorderBrush="#333333"
+                            Foreground="#333333" FontWeight="SemiBold"
+                            Click="OnLoginTabClick"/>
+                    <Button Grid.Column="1" Content="Регистрация" Classes="tab" Height="50"
+                            Name="RegisterTab"
+                            Foreground="#777777"
+                            Click="OnRegisterTabClick"/>
                 </Grid>
             </Border>
+            
+            <!-- Контейнер содержимого вкладок -->
+            <ContentControl Grid.Row="2" Name="ContentContainer" Margin="0,20,0,0">
+                <!-- Содержимое вкладок будет загружаться динамически -->
+            </ContentControl>
         </Grid>
-    </Panel>
+    </Border>
 </Window> 

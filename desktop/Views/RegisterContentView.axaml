@@ -1,0 +1,65 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="450"
+             x:Class="PhotoStudio.Desktop.Views.RegisterContentView">
+    
+    <StackPanel Spacing="15">
+        <!-- Тип аккаунта -->
+        <TextBlock Text="Тип аккаунта" Classes="field-label"/>
+        <Grid ColumnDefinitions="*,*" Margin="0,0,0,5">
+            <!-- Поставщик -->
+            <Border Grid.Column="0" Classes="account-type selected" Name="SupplierType" 
+                    Tapped="OnAccountTypeSelected">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="📷" FontSize="24" HorizontalAlignment="Center" 
+                               Foreground="Black"/>
+                    <TextBlock Text="Поставщик" FontWeight="SemiBold" HorizontalAlignment="Center" 
+                               Foreground="#333333"/>
+                    <TextBlock Text="Владелец студии" Foreground="#777777" FontSize="12" 
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- Клиент -->
+            <Border Grid.Column="1" Classes="account-type" Name="ClientType"
+                    Tapped="OnAccountTypeSelected">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="👤" FontSize="24" HorizontalAlignment="Center"
+                               Foreground="Black"/>
+                    <TextBlock Text="Клиент" FontWeight="SemiBold" HorizontalAlignment="Center"
+                               Foreground="#333333"/>
+                    <TextBlock Text="Фотограф, клиент" Foreground="#777777" FontSize="12" 
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        
+        <!-- Имя -->
+        <TextBlock Text="Имя" Classes="field-label"/>
+        <TextBox Watermark="Иван Петров" Text="{Binding RegisterName}"/>
+        
+        <!-- Email -->
+        <TextBlock Text="Email" Classes="field-label"/>
+        <TextBox Watermark="example@mail.com" Text="{Binding RegisterEmail}"/>
+        
+        <!-- Пароль -->
+        <TextBlock Text="Пароль" Classes="field-label"/>
+        <TextBox PasswordChar="•" Text="{Binding RegisterPassword}"/>
+        
+        <!-- Согласие с условиями -->
+        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,5,0,10">
+            <CheckBox IsChecked="{Binding AgreeToTerms}"/>
+            <TextBlock VerticalAlignment="Center" Foreground="#333333">
+                <Run Text="Я согласен с "/>
+                <Run Text="условиями использования" Foreground="#3498db"/>
+            </TextBlock>
+        </StackPanel>
+        
+        <!-- Кнопка регистрации -->
+        <Button Content="Зарегистрироваться" Classes="primary"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Command="{Binding RegisterCommand}"/>
+    </StackPanel>
+</UserControl> 
