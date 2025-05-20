@@ -1,0 +1,98 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PhotoApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PhotoApp.Views.RegistrationView"
+             x:DataType="vm:RegistrationViewModel">
+  <Grid>
+    <Rectangle Fill="#F8F9FA" />
+    
+    <!-- Background Pattern -->
+    <Canvas>
+      <Ellipse Canvas.Left="-100" Canvas.Top="-100" Width="300" Height="300" Fill="#4361EE" Opacity="0.05"/>
+      <Ellipse Canvas.Right="-150" Canvas.Bottom="-150" Width="400" Height="400" Fill="#4361EE" Opacity="0.08"/>
+      <Ellipse Canvas.Left="480" Canvas.Top="90" Width="200" Height="200" Fill="#E63946" Opacity="0.05"/>
+    </Canvas>
+    
+    <Grid ColumnDefinitions="1*,2*">
+      <!-- Left Side - Promo Panel -->
+      <Border Grid.Column="0" Background="#4361EE" CornerRadius="0,16,16,0" Margin="0,40,0,40" ClipToBounds="True">
+        <Grid>
+          <Canvas>
+            <Ellipse Canvas.Left="-50" Canvas.Top="120" Width="200" Height="200" Fill="White" Opacity="0.1"/>
+            <Ellipse Canvas.Right="-100" Canvas.Bottom="-100" Width="300" Height="300" Fill="White" Opacity="0.1"/>
+          </Canvas>
+          
+          <StackPanel Margin="40,0" VerticalAlignment="Center">
+            <TextBlock Text="Регистрация" Foreground="White" FontSize="32" FontWeight="Bold" Margin="0,0,0,16"/>
+            <TextBlock TextWrapping="Wrap" Foreground="White" Opacity="0.9" FontSize="16" Margin="0,0,0,32" 
+                       Text="Создайте аккаунт фотографа и начните управлять своими фотографиями, клиентами и доходами с нашей простой и удобной системой."/>
+          </StackPanel>
+        </Grid>
+      </Border>
+      
+      <!-- Right Side - Registration Form -->
+      <Border Grid.Column="1" CornerRadius="16" Background="White" Margin="0,40,40,40" BoxShadow="0 4 20 0 #20000000">
+        <ScrollViewer>
+          <StackPanel Margin="40" VerticalAlignment="Center" Spacing="12">
+            <TextBlock Text="Создание аккаунта" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,16"/>
+            
+            <!-- Username -->
+            <StackPanel>
+              <TextBlock Text="Имя пользователя *" Margin="0,0,0,8" FontSize="14"/>
+              <TextBox Text="{Binding Username}" Watermark="Введите имя пользователя" Height="42"/>
+            </StackPanel>
+            
+            <!-- Name -->
+            <StackPanel>
+              <TextBlock Text="Имя и фамилия *" Margin="0,0,0,8" FontSize="14"/>
+              <TextBox Text="{Binding Name}" Watermark="Введите ваше полное имя" Height="42"/>
+            </StackPanel>
+            
+            <!-- Email -->
+            <StackPanel>
+              <TextBlock Text="Email *" Margin="0,0,0,8" FontSize="14"/>
+              <TextBox Text="{Binding Email}" Watermark="Введите ваш email" Height="42"/>
+            </StackPanel>
+            
+            <!-- Phone -->
+            <StackPanel>
+              <TextBlock Text="Телефон" Margin="0,0,0,8" FontSize="14"/>
+              <TextBox Text="{Binding Phone}" Watermark="Введите ваш телефон" Height="42"/>
+            </StackPanel>
+            
+            <!-- Password -->
+            <StackPanel>
+              <TextBlock Text="Пароль *" Margin="0,0,0,8" FontSize="14"/>
+              <TextBox PasswordChar="•" Text="{Binding Password}" Watermark="Введите пароль" Height="42"/>
+            </StackPanel>
+            
+            <!-- Confirm Password -->
+            <StackPanel>
+              <TextBlock Text="Подтверждение пароля *" Margin="0,0,0,8" FontSize="14"/>
+              <TextBox PasswordChar="•" Text="{Binding ConfirmPassword}" Watermark="Повторите пароль" Height="42"/>
+            </StackPanel>
+            
+            <TextBlock Text="* - обязательные поля" FontSize="12" Opacity="0.7" Margin="0,4,0,8"/>
+            
+            <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,16,0,0">
+              <Button Content="Зарегистрироваться" Command="{Binding RegisterCommand}" Classes="primary"
+                      HorizontalAlignment="Stretch" Width="200" Height="45" FontSize="16" FontWeight="SemiBold"
+                      HorizontalContentAlignment="Center"/>
+              <Button Content="Отмена" Command="{Binding CancelCommand}" Classes="secondary"
+                      HorizontalAlignment="Stretch" Width="130" Height="45" FontSize="16" FontWeight="SemiBold"
+                      HorizontalContentAlignment="Center"/>
+            </StackPanel>
+            
+            <TextBlock Text="{Binding ErrorMessage}" 
+                     Foreground="#E63946" 
+                     HorizontalAlignment="Center" 
+                     Margin="0,16,0,0"/>
+          </StackPanel>
+        </ScrollViewer>
+      </Border>
+    </Grid>
+  </Grid>
+</UserControl> 

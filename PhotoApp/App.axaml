@@ -55,6 +55,19 @@
             <Setter Property="Cursor" Value="Hand"/>
         </Style>
         
+        <Style Selector="Button.transparent">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#4361EE"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="4,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        
+        <Style Selector="Button.transparent:pointerover">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Opacity" Value="0.8"/>
+        </Style>
+        
         <Style Selector="TextBox">
             <Setter Property="CornerRadius" Value="6"/>
             <Setter Property="Padding" Value="12,8"/>

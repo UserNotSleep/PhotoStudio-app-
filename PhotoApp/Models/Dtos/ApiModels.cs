@@ -6,10 +6,10 @@ namespace PhotoApp.Models.Dtos
     public class LoginRequest
     {
         [JsonPropertyName("username")]
-        public string Username { get; set; }
+        public string Username { get; set; } = string.Empty;
         
         [JsonPropertyName("password")]
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
     }
 
     public class LoginResponse
@@ -24,22 +24,22 @@ namespace PhotoApp.Models.Dtos
         public int Id { get; set; }
         
         [JsonPropertyName("username")]
-        public string Username { get; set; }
+        public string Username { get; set; } = string.Empty;
         
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         
         [JsonPropertyName("email")]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
         
         [JsonPropertyName("phone")]
-        public string Phone { get; set; }
+        public string Phone { get; set; } = string.Empty;
         
         [JsonPropertyName("bio")]
-        public string Bio { get; set; }
+        public string Bio { get; set; } = string.Empty;
         
         [JsonPropertyName("profileImageUrl")]
-        public string ProfileImageUrl { get; set; }
+        public string ProfileImageUrl { get; set; } = string.Empty;
     }
 
     public class PhotoGallery
@@ -48,10 +48,10 @@ namespace PhotoApp.Models.Dtos
         public int Id { get; set; }
         
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         
         [JsonPropertyName("description")]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
         
         [JsonPropertyName("createdDate")]
         public DateTime CreatedDate { get; set; }
@@ -60,7 +60,7 @@ namespace PhotoApp.Models.Dtos
         public int ImageCount { get; set; }
         
         [JsonPropertyName("coverImageUrl")]
-        public string CoverImageUrl { get; set; }
+        public string CoverImageUrl { get; set; } = string.Empty;
     }
 
     public class Photo
@@ -69,10 +69,10 @@ namespace PhotoApp.Models.Dtos
         public int Id { get; set; }
         
         [JsonPropertyName("filename")]
-        public string Filename { get; set; }
+        public string Filename { get; set; } = string.Empty;
         
         [JsonPropertyName("path")]
-        public string Path { get; set; }
+        public string Path { get; set; } = string.Empty;
         
         [JsonPropertyName("session_id")]
         public int SessionId { get; set; }
@@ -84,22 +84,22 @@ namespace PhotoApp.Models.Dtos
     public class PhotoMetadata
     {
         [JsonPropertyName("cameraModel")]
-        public string CameraModel { get; set; }
+        public string CameraModel { get; set; } = string.Empty;
         
         [JsonPropertyName("exposureTime")]
-        public string ExposureTime { get; set; }
+        public string ExposureTime { get; set; } = string.Empty;
         
         [JsonPropertyName("aperture")]
-        public string Aperture { get; set; }
+        public string Aperture { get; set; } = string.Empty;
         
         [JsonPropertyName("iso")]
         public int Iso { get; set; }
         
         [JsonPropertyName("focalLength")]
-        public string FocalLength { get; set; }
+        public string FocalLength { get; set; } = string.Empty;
         
         [JsonPropertyName("locationName")]
-        public string LocationName { get; set; }
+        public string LocationName { get; set; } = string.Empty;
     }
 
     public class Client
@@ -108,13 +108,13 @@ namespace PhotoApp.Models.Dtos
         public int Id { get; set; }
         
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         
         [JsonPropertyName("phone")]
-        public string Phone { get; set; }
+        public string Phone { get; set; } = string.Empty;
         
         [JsonPropertyName("email")]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
     }
 
     public class Order
@@ -126,13 +126,13 @@ namespace PhotoApp.Models.Dtos
         public int ClientId { get; set; }
         
         [JsonPropertyName("clientName")]
-        public string ClientName { get; set; }
+        public string ClientName { get; set; } = string.Empty;
         
         [JsonPropertyName("title")]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
         
         [JsonPropertyName("description")]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
         
         [JsonPropertyName("orderDate")]
         public DateTime OrderDate { get; set; }
@@ -141,7 +141,7 @@ namespace PhotoApp.Models.Dtos
         public DateTime DueDate { get; set; }
         
         [JsonPropertyName("status")]
-        public string Status { get; set; }
+        public string Status { get; set; } = string.Empty;
         
         [JsonPropertyName("amount")]
         public decimal Amount { get; set; }
@@ -162,14 +162,14 @@ namespace PhotoApp.Models.Dtos
         public double Price { get; set; }
         
         [JsonPropertyName("status")]
-        public string Status { get; set; }
+        public string Status { get; set; } = string.Empty;
         
         [JsonPropertyName("client_id")]
         public int ClientId { get; set; }
         
         // Дополнительные свойства для UI
         [JsonIgnore]
-        public string ClientName { get; set; }
+        public string ClientName { get; set; } = string.Empty;
     }
 
     public class DashboardStats
@@ -178,6 +178,6 @@ namespace PhotoApp.Models.Dtos
         public int TotalSessions { get; set; }
         public int TotalPhotos { get; set; }
         public double TotalIncome { get; set; }
-        public Session[] UpcomingSessions { get; set; }
+        public Session[] UpcomingSessions { get; set; } = Array.Empty<Session>();
     }
 } 

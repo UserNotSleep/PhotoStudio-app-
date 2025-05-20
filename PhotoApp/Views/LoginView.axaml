@@ -83,13 +83,14 @@
                      HorizontalAlignment="Center" 
                      Margin="0,16,0,0"/>
                      
-          <TextBlock Text="Еще нет аккаунта? Зарегистрироваться" HorizontalAlignment="Center" Margin="0,24,0,0">
-            <TextBlock.Styles>
-              <Style Selector="TextBlock">
-                <Setter Property="Cursor" Value="Hand"/>
-              </Style>
-            </TextBlock.Styles>
-          </TextBlock>
+          <Button Command="{Binding RegisterCommand}" 
+                  Classes="transparent" 
+                  HorizontalAlignment="Center" 
+                  Margin="0,24,0,0">
+            <TextBlock Text="Еще нет аккаунта? Зарегистрироваться" 
+                       Foreground="#4361EE"
+                       TextDecorations="Underline"/>
+          </Button>
         </StackPanel>
       </Border>
     </Grid>

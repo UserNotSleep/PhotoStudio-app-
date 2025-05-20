@@ -47,14 +47,19 @@ namespace PhotoApp.ViewModels
         }
 
         public ICommand LoginCommand { get; }
+        public ICommand RegisterCommand { get; }
 
         // Initialize the event with an empty handler to avoid null reference exceptions
         public event EventHandler<PhotographerProfile> LoginSuccessful = delegate { };
+        
+        // Event to notify when the user wants to register
+        public event EventHandler RegisterRequested = delegate { };
 
         public LoginViewModel(ApiClient? apiClient = null)
         {
             _apiClient = apiClient ?? new ApiClient();
             LoginCommand = ReactiveCommand.CreateFromTask(ExecuteLoginAsync);
+            RegisterCommand = ReactiveCommand.Create(ExecuteRegister);
         }
 
         private async Task ExecuteLoginAsync()
@@ -93,6 +98,12 @@ namespace PhotoApp.ViewModels
             {
                 IsLoading = false;
             }
+        }
+        
+        private void ExecuteRegister()
+        {
+            // Уведомляем о запросе перехода к форме регистрации
+            RegisterRequested?.Invoke(this, EventArgs.Empty);
         }
     }
 } 
