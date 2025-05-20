@@ -30,6 +30,9 @@ public class MainWindowViewModel : ReactiveObject
         AddClientCommand = ReactiveCommand.CreateFromTask(AddClientAsync);
         AddSessionCommand = ReactiveCommand.CreateFromTask(AddSessionAsync);
         AddPhotoCommand = ReactiveCommand.CreateFromTask(AddPhotoAsync);
+        
+        // Автоматически загружаем данные при запуске
+        _ = LoadDataAsync();
     }
 
     public ObservableCollection<Client> Clients
@@ -70,12 +73,21 @@ public class MainWindowViewModel : ReactiveObject
             var photos = await _httpClient.GetFromJsonAsync<Photo[]>("photos");
 
             if (clients != null) Clients = new ObservableCollection<Client>(clients);
-            if (sessions != null) Sessions = new ObservableCollection<Session>(sessions);
+            if (sessions != null)
+            {
+                // Локализация статусов
+                foreach (var session in sessions)
+                {
+                    session.Status = LocalizeStatus(session.Status);
+                }
+                
+                Sessions = new ObservableCollection<Session>(sessions);
+            }
             if (photos != null) Photos = new ObservableCollection<Photo>(photos);
         }
         catch (Exception ex)
         {
-            ShowError("Error loading data", ex.Message);
+            ShowError("Ошибка загрузки данных", ex.Message);
         }
     }
 
@@ -85,7 +97,7 @@ public class MainWindowViewModel : ReactiveObject
         {
             var client = new Client
             {
-                Name = "New Client",
+                Name = "Новый клиент",
                 Phone = "123-456-7890",
                 Email = "client@example.com"
             };
@@ -98,7 +110,7 @@ public class MainWindowViewModel : ReactiveObject
         }
         catch (Exception ex)
         {
-            ShowError("Error adding client", ex.Message);
+            ShowError("Ошибка добавления клиента", ex.Message);
         }
     }
 
@@ -111,7 +123,7 @@ public class MainWindowViewModel : ReactiveObject
                 Date = DateTime.Now,
                 Duration = 60,
                 Price = 1000,
-                Status = "scheduled",
+                Status = "scheduled", // Оставляем английский для API
                 ClientId = 1
             };
 
@@ -123,7 +135,7 @@ public class MainWindowViewModel : ReactiveObject
         }
         catch (Exception ex)
         {
-            ShowError("Error adding session", ex.Message);
+            ShowError("Ошибка добавления фотосессии", ex.Message);
         }
     }
 
@@ -133,8 +145,8 @@ public class MainWindowViewModel : ReactiveObject
         {
             var photo = new Photo
             {
-                Filename = "photo.jpg",
-                Path = "/photos/photo.jpg",
+                Filename = "фото.jpg",
+                Path = "/photos/фото.jpg",
                 SessionId = 1
             };
 
@@ -146,13 +158,25 @@ public class MainWindowViewModel : ReactiveObject
         }
         catch (Exception ex)
         {
-            ShowError("Error adding photo", ex.Message);
+            ShowError("Ошибка добавления фотографии", ex.Message);
         }
     }
 
     private void ShowError(string title, string message)
     {
         // Просто выводим сообщение об ошибке в консоль, так как у нас нет доступа к UI напрямую
-        Console.WriteLine($"ERROR: {title} - {message}");
+        Console.WriteLine($"ОШИБКА: {title} - {message}");
+    }
+    
+    // Вспомогательный метод для локализации статусов
+    private string LocalizeStatus(string status)
+    {
+        return status.ToLower() switch
+        {
+            "scheduled" => "Запланирована",
+            "completed" => "Завершена",
+            "cancelled" => "Отменена",
+            _ => status
+        };
     }
 } 

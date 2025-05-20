@@ -1,0 +1,100 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="600"
+        x:Class="PhotoStudio.Desktop.Views.LoginWindow"
+        Title="Вход в систему фотостудии"
+        Width="500" Height="600"
+        WindowStartupLocation="CenterScreen"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent">
+
+    <Panel>
+        <!-- Фоновое изображение -->
+        <Border>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                    <GradientStop Color="#3498db" Offset="0"/>
+                    <GradientStop Color="#1f4864" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        
+        <!-- Полупрозрачный слой -->
+        <Panel Opacity="0.9">
+            <ExperimentalAcrylicBorder IsHitTestVisible="False">
+                <ExperimentalAcrylicBorder.Material>
+                    <ExperimentalAcrylicMaterial
+                        BackgroundSource="Digger"
+                        TintColor="Black"
+                        TintOpacity="0.1"
+                        MaterialOpacity="0.7" />
+                </ExperimentalAcrylicBorder.Material>
+            </ExperimentalAcrylicBorder>
+        </Panel>
+        
+        <!-- Основной контент -->
+        <Grid RowDefinitions="Auto,*">
+            <!-- Заголовок -->
+            <StackPanel Grid.Row="0" Margin="0,50,0,0">
+                <TextBlock Text="Фотостудия" HorizontalAlignment="Center" 
+                         FontSize="36" FontWeight="Bold" Foreground="White"
+                         FontFamily="{DynamicResource InterBold}"/>
+                <TextBlock Text="Система управления" HorizontalAlignment="Center" 
+                         FontSize="20" Foreground="White" Opacity="0.8"
+                         FontFamily="{DynamicResource InterRegular}"/>
+            </StackPanel>
+            
+            <!-- Форма входа -->
+            <Border Grid.Row="1" Background="White" Margin="50,30,50,50" 
+                    CornerRadius="8" BoxShadow="0 4 20 0 #40000000">
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" Margin="30">
+                    <TextBlock Grid.Row="0" Text="Вход в систему" 
+                               FontSize="22" FontWeight="Bold" Margin="0,0,0,20"
+                               FontFamily="{DynamicResource InterBold}"/>
+                    
+                    <StackPanel Grid.Row="1" Margin="0,0,0,15">
+                        <TextBlock Text="Имя пользователя" Margin="0,0,0,5"
+                                   FontFamily="{DynamicResource InterRegular}"/>
+                        <TextBox Watermark="Введите имя пользователя" Padding="10"
+                                 FontFamily="{DynamicResource InterRegular}"/>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Row="2" Margin="0,0,0,25">
+                        <TextBlock Text="Пароль" Margin="0,0,0,5"
+                                   FontFamily="{DynamicResource InterRegular}"/>
+                        <TextBox PasswordChar="•" Watermark="Введите пароль" Padding="10"
+                                 FontFamily="{DynamicResource InterRegular}"/>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" 
+                                HorizontalAlignment="Stretch" Margin="0,0,0,20">
+                        <CheckBox Content="Запомнить меня" IsChecked="True"
+                                  FontFamily="{DynamicResource InterRegular}"/>
+                        <Button Content="Забыли пароль?" Background="Transparent" 
+                                Foreground="#3498db" Padding="5,0" Margin="30,0,0,0" 
+                                VerticalAlignment="Center">
+                            <Button.Styles>
+                                <Style Selector="Button">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="FontFamily" Value="{DynamicResource InterRegular}"/>
+                                </Style>
+                                <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="TextBlock.Foreground" Value="#2980b9"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                    </StackPanel>
+                    
+                    <Button Grid.Row="4" Content="Войти" HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Bottom" Padding="0,12" FontSize="16"
+                            Command="{Binding LoginCommand}"
+                            FontFamily="{DynamicResource InterSemiBold}"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Panel>
+</Window> 

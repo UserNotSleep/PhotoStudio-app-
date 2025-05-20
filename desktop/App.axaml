@@ -1,8 +1,88 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="using:PhotoStudio.Desktop.Converters"
              x:Class="PhotoStudio.Desktop.App">
+    
+    <Application.Resources>
+        <converters:StatusColorConverter x:Key="StatusColorConverter"/>
+        
+        <!-- Определение шрифтов из папки Fonts -->
+        <FontFamily x:Key="InterRegular">avares://PhotoStudio.Desktop/Assets/Fonts/Inter_24pt-Regular.ttf#Inter</FontFamily>
+        <FontFamily x:Key="InterBold">avares://PhotoStudio.Desktop/Assets/Fonts/Inter_24pt-Bold.ttf#Inter</FontFamily>
+        <FontFamily x:Key="InterSemiBold">avares://PhotoStudio.Desktop/Assets/Fonts/Inter_24pt-SemiBold.ttf#Inter</FontFamily>
+    </Application.Resources>
+    
     <Application.Styles>
+        <!-- Используем FluentTheme -->
         <FluentTheme />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+        
+        <!-- Глобальные стили для русских шрифтов -->
+        <Style Selector="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource InterRegular}"/>
+        </Style>
+        
+        <Style Selector="Button > TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource InterSemiBold}"/>
+        </Style>
+        
+        <Style Selector="TextBox">
+            <Setter Property="FontFamily" Value="{StaticResource InterRegular}"/>
+        </Style>
+        
+        <Style Selector="ComboBox">
+            <Setter Property="FontFamily" Value="{StaticResource InterRegular}"/>
+        </Style>
+        
+        <Style Selector="TabItem">
+            <Setter Property="FontFamily" Value="{StaticResource InterSemiBold}"/>
+        </Style>
+        
+        <Style Selector="DataGrid">
+            <Setter Property="FontFamily" Value="{StaticResource InterRegular}"/>
+        </Style>
+        
+        <!-- Стили кнопок -->
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#3498db"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="#2980b9"/>
+        </Style>
+        
+        <!-- Стили TabControl -->
+        <Style Selector="TabItem">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Foreground" Value="#333"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        
+        <Style Selector="TabItem:selected">
+            <Setter Property="Foreground" Value="#3498db"/>
+        </Style>
+        
+        <!-- Стили DataGrid -->
+        <Style Selector="DataGrid">
+            <Setter Property="GridLinesVisibility" Value="All"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#DDD"/>
+        </Style>
+        
+        <Style Selector="DataGridRow:nth-child(2n)">
+            <Setter Property="Background" Value="#F5F9FF"/>
+        </Style>
+        
+        <Style Selector="DataGridColumnHeader">
+            <Setter Property="Background" Value="#3498db"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
     </Application.Styles>
 </Application> 

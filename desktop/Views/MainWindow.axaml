@@ -3,60 +3,278 @@
         xmlns:vm="using:PhotoStudio.Desktop.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="using:Avalonia.Controls"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
         x:Class="PhotoStudio.Desktop.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Title="Photo Studio Management System">
+        Title="Система управления фотостудией"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="White"
+        WindowStartupLocation="CenterScreen"
+        Width="1100" Height="750"
+        MinWidth="900" MinHeight="600">
 
-    <TabControl Grid.Row="1" SelectedIndex="{Binding SelectedTabIndex}">
-        <!-- Clients Tab -->
-        <TabItem Header="Clients">
-            <Grid RowDefinitions="Auto,*">
-                <Button Grid.Row="0" Content="Add Client" Command="{Binding AddClientCommand}" Margin="5"/>
-                <controls:DataGrid Grid.Row="1" Items="{Binding Clients}" AutoGenerateColumns="False" IsReadOnly="True">
-                    <controls:DataGrid.Columns>
-                        <controls:DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                        <controls:DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                        <controls:DataGridTextColumn Header="Phone" Binding="{Binding Phone}"/>
-                        <controls:DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                    </controls:DataGrid.Columns>
-                </controls:DataGrid>
-            </Grid>
-        </TabItem>
+    <Grid RowDefinitions="Auto,*">
+        <!-- Заголовок -->
+        <Border Grid.Row="0" Background="#3498db" Padding="20,15">
+            <StackPanel>
+                <TextBlock Text="Система управления фотостудией" 
+                           FontSize="24" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Управление клиентами, фотосессиями и фотографиями" 
+                           FontSize="14" Foreground="White" Opacity="0.8" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
 
-        <!-- Sessions Tab -->
-        <TabItem Header="Sessions">
-            <Grid RowDefinitions="Auto,*">
-                <Button Grid.Row="0" Content="Add Session" Command="{Binding AddSessionCommand}" Margin="5"/>
-                <controls:DataGrid Grid.Row="1" Items="{Binding Sessions}" AutoGenerateColumns="False" IsReadOnly="True">
-                    <controls:DataGrid.Columns>
-                        <controls:DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                        <controls:DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
-                        <controls:DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
-                        <controls:DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
-                        <controls:DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
-                        <controls:DataGridTextColumn Header="Client ID" Binding="{Binding ClientId}"/>
-                    </controls:DataGrid.Columns>
-                </controls:DataGrid>
-            </Grid>
-        </TabItem>
+        <!-- Основной контент -->
+        <Grid Grid.Row="1">
+            <TabControl Margin="0,10,0,0" SelectedIndex="{Binding SelectedTabIndex}">
+                <!-- Вкладка Клиенты -->
+                <TabItem Header="Клиенты">
+                    <Grid RowDefinitions="Auto,*">
+                        <!-- Панель действий -->
+                        <Border Grid.Row="0" Background="#f8f9fa" Padding="15" CornerRadius="4" Margin="10,10,10,15"
+                                BorderBrush="#e9ecef" BorderThickness="1">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10">
+                                    <Button Content="Добавить клиента" Command="{Binding AddClientCommand}"/>
+                                    <Button Content="Обновить список" Command="{Binding LoadDataCommand}"
+                                            Background="#28a745"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                                    <TextBox Width="250" Watermark="Поиск клиентов..." Padding="10,7"/>
+                                    <Button Content="Поиск" Background="#6c757d"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
 
-        <!-- Photos Tab -->
-        <TabItem Header="Photos">
-            <Grid RowDefinitions="Auto,*">
-                <Button Grid.Row="0" Content="Add Photo" Command="{Binding AddPhotoCommand}" Margin="5"/>
-                <controls:DataGrid Grid.Row="1" Items="{Binding Photos}" AutoGenerateColumns="False" IsReadOnly="True">
-                    <controls:DataGrid.Columns>
-                        <controls:DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                        <controls:DataGridTextColumn Header="Filename" Binding="{Binding Filename}"/>
-                        <controls:DataGridTextColumn Header="Path" Binding="{Binding Path}"/>
-                        <controls:DataGridTextColumn Header="Session ID" Binding="{Binding SessionId}"/>
-                        <controls:DataGridTextColumn Header="Created At" Binding="{Binding CreatedAt}"/>
-                    </controls:DataGrid.Columns>
-                </controls:DataGrid>
-            </Grid>
-        </TabItem>
-    </TabControl>
+                        <!-- Таблица клиентов -->
+                        <Border Grid.Row="1" Margin="10,0,10,10" BorderBrush="#e9ecef" BorderThickness="1" 
+                                CornerRadius="4" Padding="0" ClipToBounds="True">
+                            <DataGrid ItemsSource="{Binding Clients}" AutoGenerateColumns="False" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="70"/>
+                                    <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="*"/>
+                                    <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="160"/>
+                                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200"/>
+                                    <DataGridTemplateColumn Header="Действия" Width="180">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
+                                                    <Button Content="✎" ToolTip.Tip="Редактировать" Background="#ffc107" 
+                                                            Foreground="#212529" Padding="8,5"/>
+                                                    <Button Content="✓" ToolTip.Tip="Просмотр сессий" Background="#17a2b8" 
+                                                            Padding="8,5"/>
+                                                    <Button Content="✗" ToolTip.Tip="Удалить" Background="#dc3545" 
+                                                            Padding="8,5"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                    </Grid>
+                </TabItem>
 
+                <!-- Вкладка Фотосессии -->
+                <TabItem Header="Фотосессии">
+                    <Grid RowDefinitions="Auto,*">
+                        <!-- Панель действий -->
+                        <Border Grid.Row="0" Background="#f8f9fa" Padding="15" CornerRadius="4" Margin="10,10,10,15"
+                                BorderBrush="#e9ecef" BorderThickness="1">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10">
+                                    <Button Content="Добавить фотосессию" Command="{Binding AddSessionCommand}"/>
+                                    <Button Content="Обновить список" Command="{Binding LoadDataCommand}"
+                                            Background="#28a745"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                                    <ComboBox Width="150" SelectedIndex="0" PlaceholderText="Статус">
+                                        <ComboBoxItem>Все статусы</ComboBoxItem>
+                                        <ComboBoxItem>Запланированные</ComboBoxItem>
+                                        <ComboBoxItem>Завершенные</ComboBoxItem>
+                                        <ComboBoxItem>Отмененные</ComboBoxItem>
+                                    </ComboBox>
+                                    <TextBox Width="200" Watermark="Поиск..." Padding="10,7"/>
+                                    <Button Content="Поиск" Background="#6c757d"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Таблица фотосессий -->
+                        <Border Grid.Row="1" Margin="10,0,10,10" BorderBrush="#e9ecef" BorderThickness="1" 
+                                CornerRadius="4" Padding="0" ClipToBounds="True">
+                            <DataGrid ItemsSource="{Binding Sessions}" AutoGenerateColumns="False" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="70"/>
+                                    <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="180"/>
+                                    <DataGridTextColumn Header="Длит. (мин)" Binding="{Binding Duration}" Width="110"/>
+                                    <DataGridTextColumn Header="Стоимость" Binding="{Binding Price}" Width="120"/>
+                                    <DataGridTemplateColumn Header="Статус" Width="140">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Border CornerRadius="3" Padding="5,3" Margin="5,2"
+                                                        Background="{Binding Status, Converter={StaticResource StatusColorConverter}}">
+                                                    <TextBlock Text="{Binding Status}" Foreground="White" 
+                                                               HorizontalAlignment="Center" FontWeight="SemiBold"/>
+                                                </Border>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Клиент ID" Binding="{Binding ClientId}" Width="100"/>
+                                    <DataGridTemplateColumn Header="Действия" Width="180">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
+                                                    <Button Content="✎" ToolTip.Tip="Редактировать" Background="#ffc107" 
+                                                            Foreground="#212529" Padding="8,5"/>
+                                                    <Button Content="🖼" ToolTip.Tip="Фотографии" Background="#17a2b8" 
+                                                            Padding="8,5"/>
+                                                    <Button Content="✗" ToolTip.Tip="Удалить" Background="#dc3545" 
+                                                            Padding="8,5"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                    </Grid>
+                </TabItem>
+
+                <!-- Вкладка Фотографии -->
+                <TabItem Header="Фотографии">
+                    <Grid RowDefinitions="Auto,*">
+                        <!-- Панель действий -->
+                        <Border Grid.Row="0" Background="#f8f9fa" Padding="15" CornerRadius="4" Margin="10,10,10,15"
+                                BorderBrush="#e9ecef" BorderThickness="1">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10">
+                                    <Button Content="Добавить фотографию" Command="{Binding AddPhotoCommand}"/>
+                                    <Button Content="Обновить список" Command="{Binding LoadDataCommand}"
+                                            Background="#28a745"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                                    <TextBox Width="200" Watermark="Поиск по имени файла..." Padding="10,7"/>
+                                    <ComboBox Width="150" SelectedIndex="0" PlaceholderText="Сессия">
+                                        <ComboBoxItem>Все сессии</ComboBoxItem>
+                                    </ComboBox>
+                                    <Button Content="Поиск" Background="#6c757d"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Таблица фотографий -->
+                        <Border Grid.Row="1" Margin="10,0,10,10" BorderBrush="#e9ecef" BorderThickness="1" 
+                                CornerRadius="4" Padding="0" ClipToBounds="True">
+                            <DataGrid ItemsSource="{Binding Photos}" AutoGenerateColumns="False" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="70"/>
+                                    <DataGridTextColumn Header="Имя файла" Binding="{Binding Filename}" Width="*"/>
+                                    <DataGridTextColumn Header="Путь" Binding="{Binding Path}" Width="200"/>
+                                    <DataGridTextColumn Header="Сессия ID" Binding="{Binding SessionId}" Width="100"/>
+                                    <DataGridTextColumn Header="Создано" Binding="{Binding CreatedAt}" Width="180"/>
+                                    <DataGridTemplateColumn Header="Действия" Width="120">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
+                                                    <Button Content="👁" ToolTip.Tip="Просмотр" Background="#17a2b8" 
+                                                            Padding="8,5"/>
+                                                    <Button Content="✗" ToolTip.Tip="Удалить" Background="#dc3545" 
+                                                            Padding="8,5"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                    </Grid>
+                </TabItem>
+
+                <!-- Вкладка Аналитика и Отчеты -->
+                <TabItem Header="Аналитика">
+                    <Grid RowDefinitions="Auto,*">
+                        <Border Grid.Row="0" Background="#f8f9fa" Padding="15" CornerRadius="4" Margin="10,10,10,15"
+                                BorderBrush="#e9ecef" BorderThickness="1">
+                            <StackPanel>
+                                <TextBlock Text="Статистика фотостудии" FontSize="18" FontWeight="Bold"/>
+                                <TextBlock Text="Основные показатели работы" Opacity="0.7" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Grid Grid.Row="1" ColumnDefinitions="*,*,*" RowDefinitions="*,*" Margin="5">
+                            <!-- Информационные карточки -->
+                            <Border Grid.Column="0" Grid.Row="0" Background="White" BorderBrush="#e9ecef" 
+                                    BorderThickness="1" CornerRadius="4" Margin="5" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="Всего клиентов" FontSize="16" Opacity="0.7"/>
+                                    <TextBlock Text="25" FontSize="36" FontWeight="Bold" Foreground="#3498db"/>
+                                    <TextBlock Text="↑ 5 за последний месяц" Foreground="#28a745" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <Border Grid.Column="1" Grid.Row="0" Background="White" BorderBrush="#e9ecef" 
+                                    BorderThickness="1" CornerRadius="4" Margin="5" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="Завершенных сессий" FontSize="16" Opacity="0.7"/>
+                                    <TextBlock Text="42" FontSize="36" FontWeight="Bold" Foreground="#3498db"/>
+                                    <TextBlock Text="↑ 12 за последний месяц" Foreground="#28a745" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <Border Grid.Column="2" Grid.Row="0" Background="White" BorderBrush="#e9ecef" 
+                                    BorderThickness="1" CornerRadius="4" Margin="5" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="Общий доход" FontSize="16" Opacity="0.7"/>
+                                    <TextBlock Text="₽ 126,000" FontSize="36" FontWeight="Bold" Foreground="#3498db"/>
+                                    <TextBlock Text="↑ ₽ 45,000 за последний месяц" Foreground="#28a745" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <Border Grid.Column="0" Grid.Row="1" Background="White" BorderBrush="#e9ecef" 
+                                    BorderThickness="1" CornerRadius="4" Margin="5" Padding="15" Grid.ColumnSpan="2">
+                                <StackPanel>
+                                    <TextBlock Text="Популярные типы съемок" FontSize="16" FontWeight="SemiBold"/>
+                                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" Margin="0,15,0,0">
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Портретная съемка"/>
+                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="45%" FontWeight="SemiBold"/>
+                                        
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Семейная съемка" Margin="0,10,0,0"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="25%" FontWeight="SemiBold" Margin="0,10,0,0"/>
+                                        
+                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Предметная съемка" Margin="0,10,0,0"/>
+                                        <TextBlock Grid.Row="2" Grid.Column="1" Text="15%" FontWeight="SemiBold" Margin="0,10,0,0"/>
+                                        
+                                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Другое" Margin="0,10,0,0"/>
+                                        <TextBlock Grid.Row="3" Grid.Column="1" Text="15%" FontWeight="SemiBold" Margin="0,10,0,0"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                            
+                            <Border Grid.Column="2" Grid.Row="1" Background="White" BorderBrush="#e9ecef" 
+                                    BorderThickness="1" CornerRadius="4" Margin="5" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="Ближайшие сессии" FontSize="16" FontWeight="SemiBold"/>
+                                    <StackPanel Margin="0,15,0,0" Spacing="12">
+                                        <Border Background="#e3f2fd" CornerRadius="4" Padding="10">
+                                            <StackPanel>
+                                                <TextBlock Text="Завтра, 10:00" FontWeight="Bold"/>
+                                                <TextBlock Text="Анна Смирнова, портретная съемка" Margin="0,3,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <Border Background="#e3f2fd" CornerRadius="4" Padding="10">
+                                            <StackPanel>
+                                                <TextBlock Text="Завтра, 14:00" FontWeight="Bold"/>
+                                                <TextBlock Text="Семья Ивановых, семейная съемка" Margin="0,3,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
 </Window> 
