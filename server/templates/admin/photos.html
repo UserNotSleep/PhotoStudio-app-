@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Фото - PhotoStudio{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Фотографии</h2>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPhotoModal">
+        <i class="fas fa-plus"></i> Добавить фото
+    </button>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        {% if photos %}
+            <div class="row">
+                {% for photo in photos %}
+                    <div class="col-lg-3 col-md-4 col-6 mb-4">
+                        <div class="card h-100">
+                            <div class="position-relative">
+                                <img src="{{ photo.path }}" class="card-img-top" alt="{{ photo.filename }}" 
+                                     style="height: 200px; object-fit: cover;">
+                                <div class="position-absolute bottom-0 end-0 p-2">
+                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" 
+                                            data-bs-target="#deletePhotoModal{{ photo.id }}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-title text-truncate">{{ photo.filename }}</h6>
+                                <p class="card-text small text-muted">
+                                    Сессия: #{{ photo.session_id }}<br>
+                                    Добавлено: {{ photo.created_at.strftime('%d.%m.%Y') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center p-5">
+                <i class="fas fa-image fa-3x text-muted mb-3"></i>
+                <p class="lead">Нет загруженных фотографий</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Add Photo Modal -->
+<div class="modal fade" id="addPhotoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавить фото</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addPhotoForm">
+                    <div class="mb-3">
+                        <label for="filename" class="form-label">Имя файла</label>
+                        <input type="text" class="form-control" id="filename" name="filename" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="path" class="form-label">Путь к файлу</label>
+                        <input type="text" class="form-control" id="path" name="path" required>
+                        <div class="form-text">Введите URL или путь к файлу</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="session_id" class="form-label">Сессия</label>
+                        <select class="form-select" id="session_id" name="session_id" required>
+                            <option value="" selected disabled>Выберите сессию</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button type="submit" form="addPhotoForm" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Загрузка списка сессий для выпадающего списка
+    fetch('/api/sessions')
+        .then(response => response.json())
+        .then(sessions => {
+            const sessionSelect = document.getElementById('session_id');
+            if (sessionSelect) {
+                sessions.forEach(session => {
+                    const option = document.createElement('option');
+                    option.value = session.id;
+                    // Преобразование строки ISO в объект Date
+                    const date = new Date(session.date);
+                    const formattedDate = date.toLocaleDateString('ru-RU') + ' ' + 
+                                          date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'});
+                    option.textContent = `#${session.id} (${formattedDate})`;
+                    sessionSelect.appendChild(option);
+                });
+            }
+        });
+    
+    // Обработка отправки формы
+    const addPhotoForm = document.getElementById('addPhotoForm');
+    
+    if (addPhotoForm) {
+        addPhotoForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                filename: document.getElementById('filename').value,
+                path: document.getElementById('path').value,
+                session_id: parseInt(document.getElementById('session_id').value)
+            };
+            
+            fetch('/api/photos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.id) {
+                    // Закрыть модальное окно
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addPhotoModal'));
+                    modal.hide();
+                    
+                    // Перезагрузить страницу для отображения новых данных
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    }
+});
+</script>
+{% endblock %} 

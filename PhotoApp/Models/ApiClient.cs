@@ -60,6 +60,45 @@ namespace PhotoApp.Models
             
             throw new UnauthorizedAccessException("Неверное имя пользователя или пароль");
         }
+        
+        // Регистрация нового пользователя
+        public async Task<PhotographerProfile> RegisterAsync(RegisterRequest request)
+        {
+            try
+            {
+                // В реальном приложении здесь был бы запрос к серверу
+                // Но так как у текущего сервера нет регистрации, мы создаем фиктивный ответ
+                await Task.Delay(800); // Имитация задержки сети
+                
+                // Проверка, что пользователь с таким именем не существует
+                if (request.Username == "admin")
+                {
+                    throw new InvalidOperationException("Пользователь с таким именем уже существует");
+                }
+                
+                // Создаем фиктивный профиль
+                var profile = new PhotographerProfile
+                {
+                    Id = new Random().Next(100, 999), // Генерируем случайный ID
+                    Username = request.Username,
+                    Name = request.Name,
+                    Email = request.Email,
+                    Phone = "",
+                    Bio = "",
+                    ProfileImageUrl = "https://example.com/default-profile.jpg"
+                };
+                
+                // Имитируем успешный вход после регистрации
+                var loginResponse = await LoginAsync(request.Username, request.Password);
+                
+                return profile;
+            }
+            catch (Exception ex)
+            {
+                // Перебрасываем исключение выше
+                throw new InvalidOperationException($"Ошибка при регистрации: {ex.Message}");
+            }
+        }
 
         // Получение списка клиентов
         public async Task<List<Client>> GetClientsAsync()

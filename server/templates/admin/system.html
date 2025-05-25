@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}Информация о системе - Панель администратора{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Информация о системе</h2>
+    <button type="button" class="btn btn-secondary" id="refreshBtn">
+        <i class="fas fa-sync"></i> Обновить
+    </button>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Сведения о системе</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Платформа</th>
+                            <td>{{ system_info.platform }}</td>
+                        </tr>
+                        <tr>
+                            <th>Релиз</th>
+                            <td>{{ system_info.platform_release }}</td>
+                        </tr>
+                        <tr>
+                            <th>Версия</th>
+                            <td>{{ system_info.platform_version }}</td>
+                        </tr>
+                        <tr>
+                            <th>Архитектура</th>
+                            <td>{{ system_info.architecture }}</td>
+                        </tr>
+                        <tr>
+                            <th>Процессор</th>
+                            <td>{{ system_info.processor }}</td>
+                        </tr>
+                        <tr>
+                            <th>Имя хоста</th>
+                            <td>{{ system_info.hostname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Версия Python</th>
+                            <td>{{ system_info.python_version }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Информация о CPU</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <h6>Физические ядра: {{ system_info.cpu.physical_cores }}</h6>
+                    <h6>Всего ядер: {{ system_info.cpu.total_cores }}</h6>
+                    {% if system_info.cpu.current_frequency %}
+                    <h6>Текущая частота: {{ (system_info.cpu.current_frequency / 1000)|round(2) }} GHz</h6>
+                    {% endif %}
+                </div>
+                
+                <div class="progress mb-3">
+                    <div class="progress-bar bg-primary" role="progressbar" 
+                        style="width: {{ system_info.cpu.percent_usage }}%" 
+                        aria-valuenow="{{ system_info.cpu.percent_usage }}" 
+                        aria-valuemin="0" 
+                        aria-valuemax="100">
+                        {{ system_info.cpu.percent_usage }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Использование памяти</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <h6>Всего: {{ (system_info.memory.total / (1024**3))|round(2) }} GB</h6>
+                    <h6>Доступно: {{ (system_info.memory.available / (1024**3))|round(2) }} GB</h6>
+                    <h6>Используется: {{ ((system_info.memory.total - system_info.memory.available) / (1024**3))|round(2) }} GB</h6>
+                </div>
+                
+                <div class="progress mb-3">
+                    <div class="progress-bar bg-warning" role="progressbar" 
+                        style="width: {{ system_info.memory.percent_used }}%" 
+                        aria-valuenow="{{ system_info.memory.percent_used }}" 
+                        aria-valuemin="0" 
+                        aria-valuemax="100">
+                        {{ system_info.memory.percent_used }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Использование диска</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <h6>Всего: {{ (system_info.disk.total / (1024**3))|round(2) }} GB</h6>
+                    <h6>Используется: {{ (system_info.disk.used / (1024**3))|round(2) }} GB</h6>
+                    <h6>Свободно: {{ (system_info.disk.free / (1024**3))|round(2) }} GB</h6>
+                </div>
+                
+                <div class="progress">
+                    <div class="progress-bar bg-danger" role="progressbar" 
+                        style="width: {{ system_info.disk.percent_used }}%" 
+                        aria-valuenow="{{ system_info.disk.percent_used }}" 
+                        aria-valuemin="0" 
+                        aria-valuemax="100">
+                        {{ system_info.disk.percent_used }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const refreshBtn = document.getElementById('refreshBtn');
+    
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', function() {
+            location.reload();
+        });
+    }
+    
+    // Автоматическое обновление каждые 30 секунд
+    setTimeout(function() {
+        location.reload();
+    }, 30000);
+});
+</script>
+{% endblock %}

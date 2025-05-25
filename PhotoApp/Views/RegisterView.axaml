@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:PhotoApp.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="PhotoApp.Views.LoginView"
-             x:DataType="vm:LoginViewModel">
+             x:Class="PhotoApp.Views.RegisterView"
+             x:DataType="vm:RegisterViewModel">
   <Grid>
     <Rectangle Fill="#F8F9FA" />
     
@@ -54,46 +54,58 @@
         </Grid>
       </Border>
       
-      <!-- Right Side - Login Form -->
+      <!-- Right Side - Registration Form -->
       <Border Grid.Column="1" CornerRadius="16" Background="White" Margin="0,40,40,40" BoxShadow="0 4 20 0 #20000000">
-        <StackPanel Margin="40" VerticalAlignment="Center" Spacing="16">
-          <TextBlock Text="Вход в аккаунт" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,24"/>
-          
-          <StackPanel>
-            <TextBlock Text="Имя пользователя" Margin="0,0,0,8" FontSize="14"/>
-            <TextBox Text="{Binding Username}" Watermark="Введите имя пользователя" Height="42"/>
-          </StackPanel>
-          
-          <StackPanel>
-            <TextBlock Text="Пароль" Margin="0,0,0,8" FontSize="14"/>
-            <TextBox PasswordChar="•" Text="{Binding Password}" Watermark="Введите пароль" Height="42"/>
-          </StackPanel>
-          
-          <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,24">
-            <CheckBox Grid.Column="0" Content="Запомнить меня" IsChecked="{Binding RememberMe}"/>
-            <TextBlock Grid.Column="1" Text="Забыли пароль?" Foreground="#4361EE" VerticalAlignment="Center" Cursor="Hand"/>
-          </Grid>
-          
-          <Button Content="Войти" Command="{Binding LoginCommand}" Classes="primary"
-                  HorizontalAlignment="Stretch" Height="45" FontSize="16" FontWeight="SemiBold"
-                  HorizontalContentAlignment="Center"/>
+        <ScrollViewer>
+          <StackPanel Margin="40" VerticalAlignment="Center" Spacing="12">
+            <TextBlock Text="Регистрация" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,16"/>
+            
+            <StackPanel>
+              <TextBlock Text="Имя пользователя" Margin="0,0,0,8" FontSize="14"/>
+              <TextBox Text="{Binding Username}" Watermark="Введите имя пользователя" Height="42"/>
+            </StackPanel>
+            
+            <StackPanel>
+              <TextBlock Text="Полное имя" Margin="0,0,0,8" FontSize="14"/>
+              <TextBox Text="{Binding Name}" Watermark="Введите ваше полное имя" Height="42"/>
+            </StackPanel>
+            
+            <StackPanel>
+              <TextBlock Text="Email" Margin="0,0,0,8" FontSize="14"/>
+              <TextBox Text="{Binding Email}" Watermark="Введите ваш email" Height="42"/>
+            </StackPanel>
+            
+            <StackPanel>
+              <TextBlock Text="Пароль" Margin="0,0,0,8" FontSize="14"/>
+              <TextBox PasswordChar="•" Text="{Binding Password}" Watermark="Введите пароль" Height="42"/>
+            </StackPanel>
+            
+            <StackPanel>
+              <TextBlock Text="Подтверждение пароля" Margin="0,0,0,8" FontSize="14"/>
+              <TextBox PasswordChar="•" Text="{Binding ConfirmPassword}" Watermark="Повторите пароль" Height="42"/>
+            </StackPanel>
+            
+            <Button Content="Зарегистрироваться" Command="{Binding RegisterCommand}" Classes="primary"
+                    HorizontalAlignment="Stretch" Height="45" FontSize="16" FontWeight="SemiBold"
+                    HorizontalContentAlignment="Center" Margin="0,16,0,0"/>
                 
-          <TextBlock Text="{Binding ErrorMessage}" 
-                     Foreground="#E63946" 
-                     HorizontalAlignment="Center" 
-                     Margin="0,16,0,0"/>
+            <TextBlock Text="{Binding ErrorMessage}" 
+                       Foreground="#E63946" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,16,0,0"/>
                      
-          <Button Content="Еще нет аккаунта? Зарегистрироваться" 
-                  Command="{Binding NavigateToRegister}" 
-                  HorizontalAlignment="Center" 
-                  Margin="0,24,0,0"
-                  Background="Transparent"
-                  BorderThickness="0"
-                  Foreground="#4361EE"
-                  Cursor="Hand"
-                  Padding="0"/>
-        </StackPanel>
+            <Button Content="Уже есть аккаунт? Войти" 
+                    Command="{Binding NavigateToLogin}" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,16,0,0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Foreground="#4361EE"
+                    Cursor="Hand"
+                    Padding="0"/>
+          </StackPanel>
+        </ScrollViewer>
       </Border>
     </Grid>
   </Grid>
-</UserControl> 
+</UserControl>

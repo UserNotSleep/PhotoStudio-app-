@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using PhotoApp.Models;
 using PhotoApp.Models.Dtos;
 using ReactiveUI;
@@ -9,6 +9,7 @@ public class MainWindowViewModel : ViewModelBase
 {
     private ViewModelBase _currentViewModel;
     private LoginViewModel _loginViewModel;
+    private RegisterViewModel _registerViewModel;
     private PhotographerDashboardViewModel? _dashboardViewModel;
     private readonly ApiClient _apiClient;
 
@@ -26,6 +27,12 @@ public class MainWindowViewModel : ViewModelBase
         // Initialize login view model
         _loginViewModel = new LoginViewModel(_apiClient);
         _loginViewModel.LoginSuccessful += OnLoginSuccessful;
+        _loginViewModel.GoToRegister += OnGoToRegister;
+        
+        // Initialize register view model
+        _registerViewModel = new RegisterViewModel(_apiClient);
+        _registerViewModel.RegistrationSuccessful += OnLoginSuccessful; // Reuse the same handler
+        _registerViewModel.GoToLogin += OnGoToLogin;
         
         // Start with login view
         _currentViewModel = _loginViewModel;
@@ -87,5 +94,17 @@ public class MainWindowViewModel : ViewModelBase
             _dashboardViewModel.LogoutRequested -= OnLogoutRequested;
             _dashboardViewModel = null;
         }
+    }
+    
+    private void OnGoToRegister(object? sender, EventArgs e)
+    {
+        // Switch to register view
+        CurrentViewModel = _registerViewModel;
+    }
+    
+    private void OnGoToLogin(object? sender, EventArgs e)
+    {
+        // Switch back to login view
+        CurrentViewModel = _loginViewModel;
     }
 }

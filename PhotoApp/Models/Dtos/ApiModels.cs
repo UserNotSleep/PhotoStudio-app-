@@ -11,6 +11,24 @@ namespace PhotoApp.Models.Dtos
         [JsonPropertyName("password")]
         public string Password { get; set; }
     }
+    
+    public class RegisterRequest
+    {
+        [JsonPropertyName("username")]
+        public string Username { get; set; }
+        
+        [JsonPropertyName("password")]
+        public string Password { get; set; }
+        
+        [JsonPropertyName("email")]
+        public string Email { get; set; }
+        
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        
+        [JsonPropertyName("device_id")]
+        public string DeviceId { get; set; }
+    }
 
     public class LoginResponse
     {

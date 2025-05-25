@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block title %}Панель управления - Avalonia App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2><i class="fas fa-tachometer-alt me-2"></i>Панель управления</h2>
+            <div class="welcome-message text-end">
+                <h5>Добро пожаловать в панель администратора!</h5>
+                <p class="text-muted">{{ now.strftime('%d.%m.%Y') }}</p>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card bg-gradient-primary text-white mb-4 dashboard-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="card-title">Пользователи</h4>
+                        <h1 class="display-4">{{ users_count }}</h1>
+                    </div>
+                    <div class="icon-circle">
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a href="{{ url_for('admin_users') }}" class="text-white text-decoration-none">Посмотреть все</a>
+                <i class="fas fa-angle-right text-white"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card bg-gradient-success text-white mb-4 dashboard-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="card-title">Активность</h4>
+                        <h1 class="display-4">{{ activities_count }}</h1>
+                    </div>
+                    <div class="icon-circle">
+                        <i class="fas fa-history fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a href="{{ url_for('admin_activities') }}" class="text-white text-decoration-none">Посмотреть все</a>
+                <i class="fas fa-angle-right text-white"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card bg-gradient-warning text-white mb-4 dashboard-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="card-title">Активные пользователи</h4>
+                        <h1 class="display-4">{{ active_users_count }}</h1>
+                    </div>
+                    <div class="icon-circle">
+                        <i class="fas fa-user-check fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a href="{{ url_for('admin_users') }}" class="text-white text-decoration-none">Посмотреть всех</a>
+                <i class="fas fa-angle-right text-white"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">Быстрые действия</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ url_for('admin_users') }}" class="btn btn-primary mb-3 w-100 d-flex align-items-center">
+                            <i class="fas fa-user-plus me-2"></i> Добавить пользователя
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ url_for('admin_activities') }}" class="btn btn-success mb-3 w-100 d-flex align-items-center">
+                            <i class="fas fa-history me-2"></i> Просмотр активности
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ url_for('admin_system') }}" class="btn btn-warning mb-3 w-100 d-flex align-items-center">
+                            <i class="fas fa-server me-2"></i> Информация о системе
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ url_for('admin_profile') }}" class="btn btn-info mb-3 w-100 d-flex align-items-center">
+                            <i class="fas fa-user-cog me-2"></i> Настройки профиля
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Информация о системе</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <p><strong>Версия:</strong> Avalonia Backend 1.0</p>
+                    <p><strong>База данных:</strong> SQLite</p>
+                    <p><strong>Последнее обновление:</strong> {{ now.strftime('%d.%m.%Y') }}</p>
+                </div>
+                <div class="d-grid">
+                    <a href="{{ url_for('admin_system') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-cog me-2"></i> Подробности системы
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(to right, var(--primary-color), #3a5fd8);
+    }
+    
+    .bg-gradient-success {
+        background: linear-gradient(to right, var(--success-color), #13a06b);
+    }
+    
+    .bg-gradient-warning {
+        background: linear-gradient(to right, var(--warning-color), #e5b43b);
+    }
+    
+    .dashboard-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .icon-circle {
+        width: 60px;
+        height: 60px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .welcome-message {
+        text-align: right;
+    }
+    
+    .welcome-message h5 {
+        margin-bottom: 0;
+    }
+    
+    .welcome-message p {
+        margin-top: 0.25rem;
+    }
+    
+    .btn {
+        justify-content: center;
+    }
+</style>
+{% endblock %} 

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}PhotoStudio - Панель администратора{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4">Добро пожаловать в PhotoStudio</h1>
+        <p class="lead">Управление пользователями, отслеживание активности и мониторинг системы</p>
+        
+        <div class="mt-5">
+            <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">Войти в панель администратора</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
